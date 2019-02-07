@@ -1,0 +1,11 @@
+APIEngine/bin/
+APIEngine/obj/
+Helper/bin/
+Helper/obj/
+ICEAPI/bin/
+ICEAPI/obj/
+LSOServer/obj/
+LSTTest/bin/
+LSTTest/obj/
+.vs/
+obj/
