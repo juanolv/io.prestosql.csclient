@@ -18,16 +18,17 @@ namespace io.prestosql.test
 
                 using (DbCommand Cmd = Conn.CreateCommand())
                 {
-                    Cmd.CommandText = "SELECT 1";
+                    Cmd.CommandText = "VALUES (true, TINYINT '1', SMALLINT '1', INTEGER '1', BIGINT '1', REAL '1.0', DOUBLE '1.0', DECIMAL '123.456', VARCHAR 'Hello World!', CHAR 's', VARBINARY '1111', DATE '2019-01-01', TIME '01:02:03.456', TIME '01:02:03.456 America/Los_Angeles', TIMESTAMP '2001-08-22 03:04:05.321', TIMESTAMP '2001-08-22 03:04:05.321 America/Los_Angeles', INTERVAL '3' MONTH, INTERVAL '2' DAY, ARRAY[1, 2, 3], MAP(ARRAY['foo', 'bar'], ARRAY[1, 2]), CAST(ROW(1, 2.0) AS ROW(x BIGINT, y DOUBLE)), IPADDRESS '10.0.0.1', IPADDRESS '2001:db8::1')";
 
                     using (DbDataReader Reader = Cmd.ExecuteReader())
                     {
                         if (Reader.Read())
                         {
-                            int v = Reader.GetInt32(0);
-
-                            if (v != 1)
-                                Assert.Fail("Invalid return value");
+                            for (int i = 0; i < Reader.FieldCount; i++)
+                            {
+                                Type T = Reader.GetFieldType(i);
+                                object Value = Reader.GetValue(i);
+                            }
                         }
                     }
                 }

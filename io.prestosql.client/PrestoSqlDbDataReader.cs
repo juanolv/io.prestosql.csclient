@@ -104,7 +104,7 @@ namespace io.prestosql.client
         public override Type GetFieldType(int ordinal)
         {
             if (ordinal >= 0 && ordinal < m_ColumnCount)
-                return StandardTypes.MapType(m_Columns[ordinal].type);
+                return StandardTypes.MapType(m_Columns[ordinal].typeSignature.rawType);
             else
                 return null;
         }
@@ -199,7 +199,7 @@ namespace io.prestosql.client
 
         public override object GetValue(int ordinal)
         {
-            return m_Fields[ordinal];
+            return StandardTypes.Convert(m_Columns[ordinal].typeSignature.rawType, m_Fields[ordinal]);
         }
 
         public override int GetValues(object[] values)
